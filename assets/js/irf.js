@@ -147,7 +147,7 @@
           ctx.save();
           ctx.scale(1, 0.5);
           ctx.rotate(Math.PI / 4);
-          ctx.translate(200, -400);
+          ctx.translate(this.vpWidth / 2 - this.coor.x + 200,  this.vpHeight / 2 - this.coor.y - 400);
           callback();
           return ctx.restore();
       }
@@ -364,11 +364,11 @@
       _results = [];
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
         tile = _ref1[_i];
-        if (tile.squaredDistanceTo(camera.coor) < 100000) {
+        //if (tile.squaredDistanceTo(camera.coor) < 400000) {
           _results.push(tile.render(ctx));
-        } else {
-          _results.push(void 0);
-        }
+//        } else {
+//          _results.push(void 0);
+//        }
       }
       return _results;
     };

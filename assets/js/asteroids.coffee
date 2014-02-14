@@ -13,7 +13,8 @@ class Asteroids extends Game
     @eventManager = new EventManager
     @keyboard = new Keyboard
 
-    @sceneManager.setScene "SceneJumpNRun", this
+    @sceneManager.setScene "SceneIso", this
+#    @sceneManager.setScene "SceneJumpNRun", this
 
   update: ->
     super()
@@ -26,7 +27,7 @@ class Asteroids extends Game
 
 jQuery ->
   asteroids = new Asteroids
-    "width" : 800 
+    "width" : 1024
     "height": 600
   .start()
 

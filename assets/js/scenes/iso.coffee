@@ -1,10 +1,10 @@
 
-{ Camera, Sprite, Scene, Map } = @irf
+{ Camera, Sprite, Scene, Map, Vector } = @irf
 
 class SceneIso extends Scene
   constructor: (@parent) ->
     @camera = new Camera {"projection": "iso", "vpWidth": @parent.params.width, "vpHeight": @parent.params.height}
-    # @camera.coor = new Vector(2500,1050)
+    @camera.coor = new Vector(100,100)
 
     beach3d = new Sprite
       "texture": "images/beach3d.png"
@@ -35,8 +35,21 @@ class SceneIso extends Scene
       "pattern": "square"
       "sprite": beach3d
 
-
   update: (delta) ->
+    dif = 30
+    if @parent.keyboard.key("right")
+      @camera.coor.x += dif
+      @camera.coor.y -= dif
+    else if @parent.keyboard.key("left")
+      @camera.coor.x -= dif
+      @camera.coor.y += dif
+    else if @parent.keyboard.key("up")
+      @camera.coor.x -= dif
+      @camera.coor.y -= dif
+    else if @parent.keyboard.key("down")
+      @camera.coor.x += dif
+      @camera.coor.y += dif
+
 
   render: (ctx) ->
     @camera.apply ctx, =>
