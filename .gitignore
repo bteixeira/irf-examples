@@ -1,4 +1,3 @@
 node_modules/
 builtAssets/
-.idea
-
+bower_components/
