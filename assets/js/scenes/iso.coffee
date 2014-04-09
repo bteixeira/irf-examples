@@ -1,9 +1,14 @@
-{ Camera, Sprite, Scene, Map, Vector } = @irf
+
+{ Camera, Sprite, Scene, Map } = require 'irf'
+Ufo = require '../actors/ufo.coffee'
 
 class SceneIso extends Scene
+
     constructor: (@parent) ->
         @camera = new Camera {"projection": "iso", "vpWidth": @parent.params.width, "vpHeight": @parent.params.height}
-        @camera.coor = new Vector(100, 100)
+        # @camera.coor = new Vector(2500,1050)
+
+        @ufo = new Ufo @parent.keyboard
 
         beach3d = new Sprite
             "texture": "images/beach3d.png"
@@ -30,31 +35,20 @@ class SceneIso extends Scene
                 "00dddd00": 15
 
         @background = new Map
-            "mapfile": "maps/map.png"
+            "mapFile": "maps/map.png"
             "pattern": "square"
             "sprite": beach3d
+            "ed": @parent.eventManager
+
 
     update: (delta) ->
-        dif = 30
-        if @parent.keyboard.key("right")
-            @camera.coor.x += dif
-            @camera.coor.y -= dif
-        else if @parent.keyboard.key("left")
-            @camera.coor.x -= dif
-            @camera.coor.y += dif
-        else if @parent.keyboard.key("up")
-            @camera.coor.x -= dif
-            @camera.coor.y -= dif
-        else if @parent.keyboard.key("down")
-            @camera.coor.x += dif
-            @camera.coor.y += dif
-
+        @ufo.update delta, @background
+        @camera.coor = @ufo.coor
 
     render: (ctx) ->
-        # this is so not intuitive
-        # you should only have to apply a camera once
         @camera.apply ctx, =>
             @background.render(ctx, @camera)
+            @ufo.render ctx
 
 
-@astr.Asteroids.addScene SceneIso
+module.exports = SceneIso
